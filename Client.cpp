@@ -26,6 +26,7 @@ int main()
 	HOSTENT* ServerInfo;
 	ServerInfo = gethostbyname("naver.com");
 
+	/*
 	if (ServerInfo)
 	{
 		// 호스트 주소가 IPv4 주소인지 확인합니다.
@@ -43,15 +44,28 @@ int main()
 				// 이를 위해서 4바이트 타입인 long 타입의 포인터를 사용
 				// 호스트의 IPv4 주소 목록을 반복하면서 주소를 가져와 출력합니다.
 				IP.s_addr = *(u_long*)ServerInfo->h_addr_list[i];
+
+				// inet_ntoa : 받아온 IP 를 문자열로 변환해주는 함수입니다.
 				printf("ip : %s\n", inet_ntoa(IP));
 				i++;
 			}
 		}
 		// IPv6 를 한다면 else 를 추가해서 예외사항에 대해서 추가해줍니다.
 	}
+	*/
+
+	// 리버스 도메인, Reverse DNS
+	char IPAddress[] = "223.130.200.107";
+	ServerInfo = gethostbyaddr(IPAddress, strlen(IPAddress), AF_INET);
+	if (ServerInfo)
+	{
+		if (ServerInfo->h_addrtype == AF_INET)
+		{
+			cout << ServerInfo->h_name << endl;
+		}
+	}
 
 	WSACleanup();
-
 
 	return 0;
 }
